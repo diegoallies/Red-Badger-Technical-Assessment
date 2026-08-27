@@ -13,3 +13,7 @@ pre {
   background: #eee;
   padding: 1rem;
 }
+
+.error {
+  color: #c00;
+}

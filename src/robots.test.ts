@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { moveForward, runAll, runRobot, turnLeft, turnRight } from './robots'
+import { moveForward, parseInput, runAll, runRobot, turnLeft, turnRight } from './robots'
 
 it('turns left', () => {
   expect(turnLeft('N')).toBe('W')
@@ -47,4 +47,13 @@ FRRFLLFFRRFLL
 LLFFFLFLFL`
 
   expect(runAll(input)).toEqual(['1 1 E', '3 3 N LOST', '2 3 S'])
+})
+
+it('rejects bad input', () => {
+  expect(() => parseInput('')).toThrow('no input')
+  expect(() => parseInput('51 3')).toThrow('bad coordinate')
+  expect(() => parseInput('5 3\n1 1 X\nF')).toThrow('bad direction')
+  expect(() => parseInput('5 3\n1 1 N')).toThrow('no instructions')
+  expect(() => parseInput('5 3\n1 1 N\nFXF')).toThrow('bad instruction')
+  expect(() => parseInput('5 3\n1 1 N\n' + 'F'.repeat(100))).toThrow('under 100')
 })

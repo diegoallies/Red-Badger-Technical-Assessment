@@ -13,9 +13,16 @@ FRRFLLFFRRFLL
 LLFFFLFLFL`)
 
 const output = ref('')
+const error = ref('')
 
 function run() {
-  output.value = runAll(input.value).join('\n')
+  error.value = ''
+  output.value = ''
+  try {
+    output.value = runAll(input.value).join('\n')
+  } catch (e) {
+    error.value = (e as Error).message
+  }
 }
 </script>
 
@@ -28,5 +35,6 @@ function run() {
     <button @click="run">Run</button>
 
     <pre v-if="output">{{ output }}</pre>
+    <p v-if="error" class="error">{{ error }}</p>
   </main>
 </template>

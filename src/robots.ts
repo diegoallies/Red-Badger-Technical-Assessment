@@ -1,12 +1,29 @@
-export function parseInput(input: string) {
-  const lines = input.split('\n').filter((l) => l.trim() !== '')
+function parseCoord(s: string) {
+  const n = Number(s)
+  if (!Number.isInteger(n) || n < 0 || n > 50) {
+    throw new Error(`bad coordinate: ${s} (must be 0 to 50)`)
+  }
+  return n
+}
 
-  const [maxX, maxY] = lines[0].split(' ').map(Number)
+export function parseInput(input: string) {
+  const lines = input.split('\n').map((l) => l.trim()).filter((l) => l !== '')
+
+  if (lines.length === 0) throw new Error('no input')
+
+  const [maxX, maxY] = lines[0].split(/\s+/).map(parseCoord)
 
   const robots = []
   for (let i = 1; i < lines.length; i += 2) {
-    const [x, y, dir] = lines[i].split(' ')
-    robots.push({ x: Number(x), y: Number(y), dir, instructions: lines[i + 1] })
+    const [x, y, dir] = lines[i].split(/\s+/)
+    const instructions = lines[i + 1]
+
+    if (!DIRS.includes(dir)) throw new Error(`bad direction: ${dir}`)
+    if (instructions === undefined) throw new Error(`robot at line ${i + 1} has no instructions`)
+    if (instructions.length >= 100) throw new Error('instructions must be under 100 chars')
+    if (!/^[LRF]*$/.test(instructions)) throw new Error(`bad instruction in: ${instructions}`)
+
+    robots.push({ x: parseCoord(x), y: parseCoord(y), dir, instructions })
   }
 
   return { maxX, maxY, robots }
