@@ -3,3 +3,13 @@ body {
   margin: 2rem;
   max-width: 48rem;
 }
+
+textarea {
+  width: 100%;
+  font-family: monospace;
+}
+
+pre {
+  background: #eee;
+  padding: 1rem;
+}
