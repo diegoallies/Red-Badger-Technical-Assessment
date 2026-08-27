@@ -23,16 +23,16 @@ it('moves forward in the direction it is facing', () => {
 })
 
 it('runs a full instruction string', () => {
-  expect(runRobot(1, 1, 'E', 'RFRFRFRF', 5, 3, new Set())).toEqual({ x: 1, y: 1, dir: 'E', lost: false })
+  expect(runRobot(1, 1, 'E', 'RFRFRFRF', { maxX: 5, maxY: 3, scents: new Set() })).toEqual({ x: 1, y: 1, dir: 'E', lost: false })
 })
 
 it('is lost when it moves off the grid', () => {
-  expect(runRobot(3, 2, 'N', 'FRRFLLFFRRFLL', 5, 3, new Set())).toEqual({ x: 3, y: 3, dir: 'N', lost: true })
+  expect(runRobot(3, 2, 'N', 'FRRFLLFFRRFLL', { maxX: 5, maxY: 3, scents: new Set() })).toEqual({ x: 3, y: 3, dir: 'N', lost: true })
 })
 
 it('ignores a move off the grid where a robot was already lost', () => {
-  const scents = new Set(['3,3'])
-  expect(runRobot(3, 3, 'N', 'FFL', 5, 3, scents)).toEqual({ x: 3, y: 3, dir: 'W', lost: false })
+  const world = { maxX: 5, maxY: 3, scents: new Set(['3,3']) }
+  expect(runRobot(3, 3, 'N', 'FFL', world)).toEqual({ x: 3, y: 3, dir: 'W', lost: false })
 })
 
 it('matches the sample output', () => {

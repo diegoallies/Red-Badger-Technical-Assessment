@@ -29,38 +29,44 @@ export function moveForward(x: number, y: number, dir: string) {
   return { x: x - 1, y }
 }
 
-export function runRobot(
-  x: number,
-  y: number,
-  dir: string,
-  instructions: string,
-  maxX: number,
-  maxY: number,
-  scents: Set<string>,
-) {
-  for (const c of instructions) {
-    if (c === 'L') dir = turnLeft(dir)
-    else if (c === 'R') dir = turnRight(dir)
-    else if (c === 'F') {
-      const next = moveForward(x, y, dir)
-      if (next.x < 0 || next.x > maxX || next.y < 0 || next.y > maxY) {
-        if (scents.has(`${x},${y}`)) continue
-        scents.add(`${x},${y}`)
-        return { x, y, dir, lost: true }
-      }
-      x = next.x
-      y = next.y
+type Robot = { x: number; y: number; dir: string; lost: boolean }
+type World = { maxX: number; maxY: number; scents: Set<string> } 
+
+// each command takes the robot and returns the updated one
+// adding a new command is just a new entry here
+const commands: Record<string, (r: Robot, w: World) => Robot> = {
+  L: (r) => ({ ...r, dir: turnLeft(r.dir) }),
+  R: (r) => ({ ...r, dir: turnRight(r.dir) }),  
+  F: (r, w) => {
+    const next = moveForward(r.x, r.y, r.dir)
+
+    if (next.x < 0 || next.x > w.maxX || next.y < 0 || next.y > w.maxY) {
+      if (w.scents.has(`${r.x},${r.y}`))  return r
+      w.scents.add(`${r.x},${r.y}`)
+      return { ...r, lost: true }
     }
+
+    return { ...r, x: next.x, y: next.y } 
+  },
+}
+
+export function runRobot(x: number, y: number, dir: string, instructions: string, world: World) {
+  let robot: Robot = { x, y, dir, lost: false }
+
+  for (const c of instructions) {
+    robot = commands[c](robot, world)
+    if (robot.lost)  break
   }
-  return { x, y, dir, lost: false }
+
+  return robot
 }
 
 export function runAll(input: string) {
   const { maxX, maxY, robots } = parseInput(input)
-  const scents = new Set<string>()
+  const world: World = { maxX, maxY, scents: new Set() } 
 
   return robots.map((r) => {
-    const res = runRobot(r.x, r.y, r.dir, r.instructions, maxX, maxY, scents)
+    const res = runRobot(r.x, r.y, r.dir, r.instructions, world)
     return `${res.x} ${res.y} ${res.dir}` + (res.lost ? ' LOST' : '')
   })
 }
