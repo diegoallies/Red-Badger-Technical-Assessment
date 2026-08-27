@@ -11,3 +11,13 @@ export function parseInput(input: string) {
 
   return { maxX, maxY, robots }
 }
+
+const DIRS = ['N', 'E', 'S', 'W']
+
+export function turnLeft(dir: string) {
+  return DIRS[(DIRS.indexOf(dir) + 3) % 4]
+}
+
+export function turnRight(dir: string) {
+  return DIRS[(DIRS.indexOf(dir) + 1) % 4]
+}
