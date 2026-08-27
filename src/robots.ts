@@ -29,11 +29,18 @@ export function moveForward(x: number, y: number, dir: string) {
   return { x: x - 1, y }
 }
 
-export function runRobot(x: number, y: number, dir: string, instructions: string) {
+export function runRobot(x: number, y: number, dir: string, instructions: string, maxX: number, maxY: number) {
   for (const c of instructions) {
     if (c === 'L') dir = turnLeft(dir)
     else if (c === 'R') dir = turnRight(dir)
-    else if (c === 'F') ({ x, y } = moveForward(x, y, dir))
+    else if (c === 'F') {
+      const next = moveForward(x, y, dir)
+      if (next.x < 0 || next.x > maxX || next.y < 0 || next.y > maxY) {
+        return { x, y, dir, lost: true }
+      }
+      x = next.x
+      y = next.y
+    }
   }
-  return { x, y, dir }
+  return { x, y, dir, lost: false }
 }

@@ -23,5 +23,9 @@ it('moves forward in the direction it is facing', () => {
 })
 
 it('runs a full instruction string', () => {
-  expect(runRobot(1, 1, 'E', 'RFRFRFRF')).toEqual({ x: 1, y: 1, dir: 'E' })
+  expect(runRobot(1, 1, 'E', 'RFRFRFRF', 5, 3)).toEqual({ x: 1, y: 1, dir: 'E', lost: false })
+})
+
+it('is lost when it moves off the grid', () => {
+  expect(runRobot(3, 2, 'N', 'FRRFLLFFRRFLL', 5, 3)).toEqual({ x: 3, y: 3, dir: 'N', lost: true })
 })
