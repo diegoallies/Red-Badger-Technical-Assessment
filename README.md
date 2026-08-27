@@ -17,4 +17,4 @@ npm test
 
 - all the logic is in src/robots.ts, vue is just there for the input/output
 - if a robot goes off the grid its lost, it stays at the last position and LOST gets printed
-- todo: scent stuff so the next robots dont fall off at the same place
+- when a robot is lost it leaves a scent on that square, other robots just ignore a move off the grid from there

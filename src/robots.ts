@@ -29,13 +29,23 @@ export function moveForward(x: number, y: number, dir: string) {
   return { x: x - 1, y }
 }
 
-export function runRobot(x: number, y: number, dir: string, instructions: string, maxX: number, maxY: number) {
+export function runRobot(
+  x: number,
+  y: number,
+  dir: string,
+  instructions: string,
+  maxX: number,
+  maxY: number,
+  scents: Set<string>,
+) {
   for (const c of instructions) {
     if (c === 'L') dir = turnLeft(dir)
     else if (c === 'R') dir = turnRight(dir)
     else if (c === 'F') {
       const next = moveForward(x, y, dir)
       if (next.x < 0 || next.x > maxX || next.y < 0 || next.y > maxY) {
+        if (scents.has(`${x},${y}`)) continue
+        scents.add(`${x},${y}`)
         return { x, y, dir, lost: true }
       }
       x = next.x
@@ -43,4 +53,14 @@ export function runRobot(x: number, y: number, dir: string, instructions: string
     }
   }
   return { x, y, dir, lost: false }
+}
+
+export function runAll(input: string) {
+  const { maxX, maxY, robots } = parseInput(input)
+  const scents = new Set<string>()
+
+  return robots.map((r) => {
+    const res = runRobot(r.x, r.y, r.dir, r.instructions, maxX, maxY, scents)
+    return `${res.x} ${res.y} ${res.dir}` + (res.lost ? ' LOST' : '')
+  })
 }
