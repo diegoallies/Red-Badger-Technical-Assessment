@@ -28,3 +28,12 @@ export function moveForward(x: number, y: number, dir: string) {
   if (dir === 'E') return { x: x + 1, y }
   return { x: x - 1, y }
 }
+
+export function runRobot(x: number, y: number, dir: string, instructions: string) {
+  for (const c of instructions) {
+    if (c === 'L') dir = turnLeft(dir)
+    else if (c === 'R') dir = turnRight(dir)
+    else if (c === 'F') ({ x, y } = moveForward(x, y, dir))
+  }
+  return { x, y, dir }
+}

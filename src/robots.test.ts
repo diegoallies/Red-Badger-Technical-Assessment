@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { moveForward, turnLeft, turnRight } from './robots'
+import { moveForward, runRobot, turnLeft, turnRight } from './robots'
 
 it('turns left', () => {
   expect(turnLeft('N')).toBe('W')
@@ -20,4 +20,8 @@ it('moves forward in the direction it is facing', () => {
   expect(moveForward(1, 1, 'S')).toEqual({ x: 1, y: 0 })
   expect(moveForward(1, 1, 'E')).toEqual({ x: 2, y: 1 })
   expect(moveForward(1, 1, 'W')).toEqual({ x: 0, y: 1 })
+})
+
+it('runs a full instruction string', () => {
+  expect(runRobot(1, 1, 'E', 'RFRFRFRF')).toEqual({ x: 1, y: 1, dir: 'E' })
 })
