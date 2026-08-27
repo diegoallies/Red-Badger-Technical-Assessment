@@ -21,3 +21,10 @@ export function turnLeft(dir: string) {
 export function turnRight(dir: string) {
   return DIRS[(DIRS.indexOf(dir) + 1) % 4]
 }
+
+export function moveForward(x: number, y: number, dir: string) {
+  if (dir === 'N') return { x, y: y + 1 }
+  if (dir === 'S') return { x, y: y - 1 }
+  if (dir === 'E') return { x: x + 1, y }
+  return { x: x - 1, y }
+}
