@@ -1,19 +1,96 @@
-body {
-  font-family: system-ui, sans-serif;
-  margin: 2rem;
-  max-width: 48rem;
+* {
+  box-sizing: border-box;
 }
 
-textarea {
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background: #f6f6f6;
+  color: #222;
+}
+
+main {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+}
+
+.cols {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.cols section {
+  flex: 1 1 18rem;
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #555;
+}
+
+textarea,
+pre {
   width: 100%;
-  font-family: monospace;
+  min-height: 15rem;
+  margin: 0;
+  padding: 0.75rem;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
 }
 
 pre {
-  background: #eee;
-  padding: 1rem;
+  white-space: pre-wrap;
+}
+
+button {
+  margin-top: 0.75rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.95rem;
+  border: 0;
+  border-radius: 6px;
+  background: #c8102e;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #a50d25;
 }
 
 .error {
+  color: #c00;
+  margin: 0.5rem 0 0;
+}
+
+.positions {
+  margin-top: 2rem;
+}
+
+.grid {
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.grid td {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.lost {
   color: #c00;
 }

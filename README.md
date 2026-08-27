@@ -26,9 +26,10 @@ npm test
 - when a robot is lost it leaves a scent on that square, other robots just ignore a move off the grid from there
 - commands are in a map (L, R, F) so adding a new one is just another entry, the brief said more might come later
 - input gets checked against the limits in the brief (coords 0 to 50, instructions under 100 chars, only L R F)
+- theres a little grid under the output showing where each robot ended up, red arrow means it got lost
 
 ## Next steps
 
-- show the robots on a grid instead of just text output
+- animate the robots moving on the grid step by step
 - let you upload a file instead of pasting
 - maybe move the command map to its own file if more commands get added
